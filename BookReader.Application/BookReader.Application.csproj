@@ -5,7 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BookReader.Core\BookReader.Core.csproj" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BookReader.Core\BookReader.Core.csproj" />
+    <ProjectReference Include="..\Lib\Repositories.Abstractions\Repositories.Abstractions.csproj" />
+  </ItemGroup>
 </Project>
