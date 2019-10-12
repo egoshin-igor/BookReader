@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using BookReader.Core.Books;
+﻿using BookReader.Core.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -12,6 +9,13 @@ namespace BookReader.Infrastructure.Configurations
         public void Configure( EntityTypeBuilder<Book> builder )
         {
             builder.ToTable( nameof( Book ) ).HasKey( t => t.Id );
+
+            builder.HasOne<Genre>()
+                .WithMany()
+                .HasForeignKey( b => b.GenreId );
+            builder.HasOne<Author>()
+                .WithMany()
+                .HasForeignKey( b => b.AuthorId );
         }
     }
 }

@@ -12,6 +12,10 @@ namespace BookReader.Infrastructure.Foundation
         protected override void OnModelCreating( ModelBuilder builder )
         {
             builder.ApplyConfiguration( new BookConfiguration() );
+            builder.ApplyConfiguration( new AuthorConfiguration() );
+            builder.ApplyConfiguration( new GenreConfiguration() );
+            builder.ApplyConfiguration( new UserBookConfiguration() );
+            builder.ApplyConfiguration( new UserConfiguration() );
         }
     }
 }
