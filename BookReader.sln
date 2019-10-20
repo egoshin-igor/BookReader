@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookReader.Api", "BookReader.Api\BookReader.Api.csproj", "{C72BCF19-416D-4949-8EEC-E61281BDFE4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookReader.Api", "BookReader.Api\BookReader.Api.csproj", "{C72BCF19-416D-4949-8EEC-E61281BDFE4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookReader.Application", "BookReader.Application\BookReader.Application.csproj", "{91ABB91D-758E-4577-BD5B-6F6E46CAB2DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookReader.Application", "BookReader.Application\BookReader.Application.csproj", "{91ABB91D-758E-4577-BD5B-6F6E46CAB2DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookReader.Core", "BookReader.Core\BookReader.Core.csproj", "{03491D0F-D66D-4644-BBEB-19168E14A02F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookReader.Core", "BookReader.Core\BookReader.Core.csproj", "{03491D0F-D66D-4644-BBEB-19168E14A02F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookReader.Infrastructure", "BookReader.Infrastructure\BookReader.Infrastructure.csproj", "{4C791528-DC25-4CD2-AF59-516572A66851}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookReader.Infrastructure", "BookReader.Infrastructure\BookReader.Infrastructure.csproj", "{4C791528-DC25-4CD2-AF59-516572A66851}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{7644CE8F-60E0-4EE8-B3E9-63B30902BD56}"
 EndProject

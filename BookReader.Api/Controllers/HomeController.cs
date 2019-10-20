@@ -14,9 +14,15 @@ namespace BookReader.Api.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public HomeController( IUnitOfWork unitOfWork, IAccountService accountService )
+        public HomeController( IUnitOfWork unitOfWork )
         {
             _unitOfWork = unitOfWork;
+        }
+
+        [HttpGet( "my-name" )]
+        public async Task<string> GetMyName()
+        {
+            return "Igor";
         }
 
         [HttpGet( "books" )]
