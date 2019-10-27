@@ -2,6 +2,7 @@
 using BookReader.Api.Dtos;
 using BookReader.Application.AppServices;
 using BookReader.Application.AppServices.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MusicStore.Lib.Repositories.Abstractions;
 
@@ -9,6 +10,7 @@ namespace BookReader.Api.Controllers
 {
     [Route( "api/account" )]
     [ApiController]
+    [AllowAnonymous]
     public class AccountController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -45,7 +47,7 @@ namespace BookReader.Api.Controllers
         }
 
         [HttpPost( "update-tokens" )]
-        public async Task<IActionResult> UpdateTokens( string refreshToken )
+        public async Task<IActionResult> UpdateTokens( [FromBody] string refreshToken )
         {
             UserTokenDto userToken = await _accountService.UpdateTokens( refreshToken );
 

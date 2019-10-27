@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BookReader.Api.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookReader.Api.Controllers
 {
     [Route( "api/reading" )]
     [ApiController]
+    [Authorize]
     public class BookReadingController : ControllerBase
     {
         [HttpGet( "detail" )]

@@ -7,9 +7,10 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
 import { HomeService } from './home.service';
-import { AccountService } from './services/account-service/account.service';
+import { AccountService } from './services/account.service';
 import { AuthorizationComponent } from './pages/authorization/authorization.component'
 import { FormsModule } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -35,7 +36,8 @@ import { RegistrationComponent } from './pages/registration/registration.compone
   ],
   providers: [
     HomeService,
-    AccountService
+    AccountService,
+    CookieService
   ],
   bootstrap: [AppComponent]
 })

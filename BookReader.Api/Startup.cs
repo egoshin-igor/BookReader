@@ -1,11 +1,14 @@
 ﻿using System;
+using BookReader.Application.Entities.Users;
 using BookReader.Infrastructure.Foundation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BookReader.Api
 {
@@ -25,7 +28,8 @@ namespace BookReader.Api
                 .AddDependencies()
                 .AddMvc()
                 .SetCompatibilityVersion( CompatibilityVersion.Version_2_2 );
-            Console.WriteLine( Configuration[ "Test" ] );
+
+            AddAuthentication( services );
 
             services.AddDbContext<BookReaderDbContext>( c =>
                 c.UseSqlServer( Configuration.GetConnectionString( "BookReaderConnection" ) ) );
@@ -40,6 +44,24 @@ namespace BookReader.Api
             }
 
             app.UseMvc();
+            app.UseAuthentication();
+        }
+
+        private void AddAuthentication( IServiceCollection services )
+        {
+            services.AddAuthentication( JwtBearerDefaults.AuthenticationScheme )
+                .AddJwtBearer( options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidateLifetime = true,
+                        IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                        ValidateIssuerSigningKey = true
+                    };
+                } );
         }
     }
 }

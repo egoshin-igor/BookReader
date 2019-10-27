@@ -1,25 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { BaseService } from './services/base-service';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class HomeService {
+export class HomeService extends BaseService {
 
   private homeUrl = 'api/home';
-  constructor(private http: HttpClient) { }
+  constructor(httpClient: HttpClient, cookieService: CookieService) {
+    super(httpClient, cookieService);
+  }
 
-  public getName(): Observable<string> {
+  public async getName(): Promise<string> {
     const url = `${this.homeUrl}/my-name`;
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'responseType': 'text',
-        
-      })
-    }
-    return this.http.get(url, { responseType: 'text' });
+    return (await this.Get<{name: string}>(url)).name;
   }
 }

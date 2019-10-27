@@ -12,10 +12,10 @@ export class HomeComponent implements OnInit {
   constructor(private _homeService: HomeService) { }
 
   ngOnInit() {
-    this._homeService.getName().subscribe( (respone) =>
+    this._homeService.getName().then( (response) =>
     {
-      console.log( respone );
-      this.user = respone;
+      console.log(response );
+      this.user = response;
     } );
   }
 
