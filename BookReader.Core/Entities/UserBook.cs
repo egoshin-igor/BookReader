@@ -1,6 +1,7 @@
 ﻿using System;
+using BookReader.Core.Types;
 
-namespace BookReader.Core.Model
+namespace BookReader.Core.Entities
 {
     public class UserBook
     {

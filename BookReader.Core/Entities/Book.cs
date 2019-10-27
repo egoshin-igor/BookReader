@@ -1,4 +1,4 @@
-﻿namespace BookReader.Core.Model
+﻿namespace BookReader.Core.Entities
 {
     public class Book
     {

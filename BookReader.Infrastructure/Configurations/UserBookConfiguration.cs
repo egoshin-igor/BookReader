@@ -1,4 +1,4 @@
-﻿using BookReader.Core.Model;
+﻿using BookReader.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

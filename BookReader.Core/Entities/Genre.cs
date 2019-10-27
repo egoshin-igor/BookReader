@@ -1,11 +1,11 @@
-﻿namespace BookReader.Core.Model
+﻿namespace BookReader.Core.Entities
 {
-    public class Author
+    public class Genre
     {
         public int Id { get; protected set; }
         public string Name { get; protected set; }
 
-        protected Author()
+        protected Genre()
         {
 
         }

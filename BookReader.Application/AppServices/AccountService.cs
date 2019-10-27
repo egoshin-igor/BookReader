@@ -1,93 +1,112 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Threading.Tasks;
-using BookReader.Application.AppServices.Entities;
+using BookReader.Application.AppServices.Dtos;
+using BookReader.Application.Entities.Users;
 using BookReader.Application.Repositories;
+using BookReader.Core.Entities;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BookReader.Application.AppServices
 {
     public interface IAccountService
     {
-        Task AuthenticateAsync( string email );
-        Task<ConfirmResult> ConfirmAsync( string email, string loginToken );
+        Task<bool> RegistrateAsync( RegistrationRequestDto registrationRequest );
+        Task<UserTokenDto> Auth( string login, string password );
+        Task<UserTokenDto> UpdateTokens( string refreshToken );
     }
 
     public class AccountService : IAccountService
     {
         private readonly IUserRepository _userRepository;
 
-        public AccountService( IUserRepository userRepository )
+        public AccountService( IUserBookRepository userRepository )
         {
             _userRepository = userRepository;
         }
 
-        public Task AuthenticateAsync( string email )
+        public async Task<bool> RegistrateAsync( RegistrationRequestDto registrationRequest )
         {
-            throw new NotImplementedException();
+            var user = await _userRepository.GetAsync( registrationRequest.Login );
+            if ( user != null )
+                return false;
+
+            user = new User(
+                registrationRequest.FirstName,
+                registrationRequest.LastName,
+                registrationRequest.Login,
+                registrationRequest.Email,
+                registrationRequest.Password
+            );
+            _userRepository.Add( user );
+
+            return true;
         }
 
-        public Task<ConfirmResult> ConfirmAsync( string email, string loginToken )
+        public async Task<UserTokenDto> Auth( string login, string password )
         {
-            throw new NotImplementedException();
+            User user = await _userRepository.GetAsync( login );
+            if ( user.Password != password )
+                return null;
+
+            return GenerateToken( user );
         }
 
-        //public async Task AuthenticateAsync( string email )
-        //{
-        //    string loginToken = Guid.NewGuid().ToString();
+        public async Task<UserTokenDto> UpdateTokens( string refreshToken )
+        {
+            string[] tokenInfos = refreshToken.Split( '|' );
+            if ( tokenInfos.Length != 2 )
+                return null;
+            string refreshTokenPart = tokenInfos[ 1 ];
 
-        //    var user = await _userRepository.GetAsync( email );
-        //    if ( user == null )
-        //    {
-        //        user = new User( email, UserRole.User );
-        //        _userRepository.Add( user );
-        //        _eventBus.Publish( new UserHasBeenAdded { Email = email } );
-        //    }
-        //    user.UpdateLoginToken( loginToken );
+            int userId;
+            if ( !int.TryParse( refreshTokenPart, out userId ) )
+                return null;
 
-        //    _eventBus.Publish( new UserAuthenticated { Email = email, LoginToken = loginToken } );
-        //}
+            User user = await _userRepository.GetAsync( userId );
+            if ( user == null || user.RefreshToken != refreshToken )
+                return null;
 
-        //public async Task<ConfirmResult> ConfirmAsync( string email, string loginToken )
-        //{
-        //    ClaimsIdentity identity = await GetIdentityAsync( email, loginToken );
-        //    if ( identity == null )
-        //        return null;
+            return GenerateToken( user );
+        }
 
-        //    var utcNow = DateTime.UtcNow;
-        //    var jwt = new JwtSecurityToken(
-        //            issuer: AuthOptions.Issuer,
-        //            audience: AuthOptions.Audience,
-        //            notBefore: utcNow,
-        //            claims: identity.Claims,
-        //            expires: utcNow.Add( TimeSpan.FromDays( AuthOptions.LifeTimeInDays ) ),
-        //            signingCredentials: new SigningCredentials( AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256 ) );
-        //    string encodedJwt = new JwtSecurityTokenHandler().WriteToken( jwt );
+        private UserTokenDto GenerateToken( User user )
+        {
+            ClaimsIdentity identity = GetIdentity( user );
 
-        //    string userRole = identity.Claims.First( i => i.Type == ClaimsIdentity.DefaultRoleClaimType ).Value;
-        //    return new ConfirmResult { AccessToken = encodedJwt, RefreshToken = "", UserRole = userRole };
-        //}
+            var utcNow = DateTime.UtcNow;
+            var jwt = new JwtSecurityToken(
+                    issuer: AuthOptions.Issuer,
+                    audience: AuthOptions.Audience,
+                    notBefore: utcNow,
+                    claims: identity.Claims,
+                    expires: utcNow.Add( TimeSpan.FromMinutes( AuthOptions.LifeTimeInMinutes ) ),
+                    signingCredentials: new SigningCredentials( AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256 ) );
+            string encodedJwt = new JwtSecurityTokenHandler().WriteToken( jwt );
 
-        //private async Task<ClaimsIdentity> GetIdentityAsync( string email, string loginToken )
-        //{
-        //    User user = await _userRepository.GetAsync( email );
-        //    if ( user == null )
-        //        return null;
-        //    if ( !user.IsValidLoginToken( loginToken ) )
-        //        return null;
+            string refreshToken = Guid.NewGuid().ToString();
+            user.UpdateRefreshToken( refreshToken );
+            return new UserTokenDto { AccessToken = encodedJwt, RefreshToken = $"{user.Id}|{refreshToken}" };
+        }
 
-        //    var claims = new List<Claim>
-        //    {
-        //        new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-        //        new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role)
-        //    };
+        private ClaimsIdentity GetIdentity( User user )
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, UserRole.User)
+            };
 
-        //    ClaimsIdentity claimsIdentity = new ClaimsIdentity(
-        //        claims,
-        //        "Token",
-        //        ClaimsIdentity.DefaultNameClaimType,
-        //        ClaimsIdentity.DefaultRoleClaimType
-        //    );
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(
+                claims,
+                "Token",
+                ClaimsIdentity.DefaultNameClaimType,
+                ClaimsIdentity.DefaultRoleClaimType
+            );
 
-        //    return claimsIdentity;
-        //}
+            return claimsIdentity;
+        }
     }
 }

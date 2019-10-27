@@ -1,4 +1,6 @@
 ﻿using BookReader.Application.AppServices;
+using BookReader.Application.Repositories;
+using BookReader.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using MusicStore.Lib.Repositories;
 using MusicStore.Lib.Repositories.Abstractions;
@@ -11,6 +13,13 @@ namespace BookReader.Infrastructure.Foundation
         {
             // AppServices
             services.AddScoped<IAccountService, AccountService>();
+
+            // Repositories
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAuthorRepository, AuthorRepository>();
+            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IGenreRepository, GenreRepository>();
+            services.AddScoped<IUserBookRepository, UserBookRepository>();
 
             // Other
             services.AddScoped<IUnitOfWork, UnitOfWork<BookReaderDbContext>>();
