@@ -11,6 +11,10 @@ import { AccountService } from './services/account-service/account.service';
 import { AuthorizationComponent } from './pages/authorization/authorization.component'
 import { FormsModule } from '@angular/forms';
 
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +26,10 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule
   ],
   providers: [
     HomeService,
