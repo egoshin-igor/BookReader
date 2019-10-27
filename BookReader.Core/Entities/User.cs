@@ -24,7 +24,7 @@
             FirstName = firstName;
             LastName = lastName;
             Login = login;
-            Email = email
+            Email = email;
         }
 
         public void UpdateRefreshToken( string refreshToken )

@@ -2,7 +2,6 @@
 using BookReader.Api.Dtos;
 using BookReader.Application.AppServices;
 using BookReader.Application.AppServices.Dtos;
-using BookReader.Application.AppServices.Entities;
 using Microsoft.AspNetCore.Mvc;
 using MusicStore.Lib.Repositories.Abstractions;
 

@@ -22,7 +22,7 @@ namespace BookReader.Application.AppServices
     {
         private readonly IUserRepository _userRepository;
 
-        public AccountService( IUserBookRepository userRepository )
+        public AccountService( IUserRepository userRepository )
         {
             _userRepository = userRepository;
         }
