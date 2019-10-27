@@ -7,20 +7,26 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
 import { HomeService } from './home.service';
+import { AccountService } from './services/account-service/account.service';
+import { AuthorizationComponent } from './pages/authorization/authorization.component'
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    AuthorizationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
-    HomeService
+    HomeService,
+    AccountService
   ],
   bootstrap: [AppComponent]
 })
