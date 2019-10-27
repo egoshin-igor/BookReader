@@ -7,13 +7,16 @@
             <input  type="password" matInput placeholder="Введите пароль" name="password" required="" [(ngModel)]="registrationData.password">
         </mat-form-field>
         <mat-form-field>
+            <input matInput placeholder="Введите email" name="email" required="" [(ngModel)]="registrationData.email">
+        </mat-form-field>
+        <mat-form-field>
             <input matInput placeholder="Введите имя" name="firstName" required="" [(ngModel)]="registrationData.firstName">
         </mat-form-field>
         <mat-form-field>
             <input matInput placeholder="Введите фамилия" name="lastName" required="" [(ngModel)]="registrationData.lastName">
         </mat-form-field>
         <div>
-            <button mat-raised-button color="primary" (click)="register(registrationData)">Зарегистрироваться</button>
+            <button mat-raised-button color="primary" (click)="register()">Зарегистрироваться</button>
         </div>
     </div>
 </form>

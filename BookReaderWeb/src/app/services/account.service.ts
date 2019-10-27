@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { RegistrationRequestDto } from '../dto/account/registration-request.dto';
 import { UserTokenDto } from '../dto/account/user-token.dto';
 import { AuthRequestDto } from '../dto/account/auth-request.dto';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,8 @@ import { AuthRequestDto } from '../dto/account/auth-request.dto';
 export class AccountService extends BaseService {
   private accountUrl = 'api/account';
 
-  constructor(httpClient: HttpClient, cookieService: CookieService ) {
-    super(httpClient, cookieService);
+  constructor(httpClient: HttpClient, cookieService: CookieService, router: Router ) {
+    super(httpClient, cookieService, router);
   }
 
   public async registrate(registrationRequest: RegistrationRequestDto): Promise<boolean> {

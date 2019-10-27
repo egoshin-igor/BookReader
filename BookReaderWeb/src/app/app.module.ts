@@ -15,6 +15,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material';
 import { RegistrationComponent } from './pages/registration/registration.component';
 
 @NgModule({
@@ -32,7 +33,8 @@ import { RegistrationComponent } from './pages/registration/registration.compone
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSnackBarModule
   ],
   providers: [
     HomeService,

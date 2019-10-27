@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { HttpStatusCode } from '../constants/http-status-code';
 import { CookieService } from 'ngx-cookie-service';
 import { UserTokenDto } from '../dto/account/user-token.dto';
+import { Router } from '@angular/router';
 
 export interface Response<R> {
     result: R;
@@ -13,12 +14,11 @@ export class BaseService {
     protected refreshTokenField = 'refreshToken';
     private accountBaseUrl = 'api/account'
 
-    constructor(private http: HttpClient, protected cookieService: CookieService) {
+    constructor(private http: HttpClient, protected cookieService: CookieService, private router: Router) {
     }
 
     protected async Get<HttpR>(url: string): Promise<HttpR> {
-        const response: Response<HttpR> = await  this.TryGet( url );
-        console.log(response);
+        let response: Response<HttpR> = await  this.TryGet( url );
 
         if (response.statusCode == HttpStatusCode.Ok) {
             return response.result;
@@ -29,16 +29,23 @@ export class BaseService {
 
         const isTokensUpdated: boolean = await this.updateTokens();
         if (!isTokensUpdated) {
-            return null;
+            this.router.navigate([`/authorization`]);
+            throw 'You are unauthorized';
         }
 
-        (await this.TryGet(url)).result;
+        response = await this.TryGet(url);
+        if (response.statusCode === HttpStatusCode.Ok ) {
+            return response.result;
+        } else {
+            this.router.navigate([`/authorization`]);
+            throw 'You are unauthorized';
+        }
     }
 
     protected async Post<HttpRequest, HttpResponse>(url: string, request: HttpRequest): Promise<HttpResponse> {
-        const response: Response<HttpResponse> = await this.TryPost(url, request);
+        let response: Response<HttpResponse> = await this.TryPost(url, request);
         console.log(response);
-
+        
         if (response.statusCode == HttpStatusCode.Ok) {
             return response.result;
         }
@@ -48,10 +55,17 @@ export class BaseService {
 
         const isTokensUpdated: boolean = await this.updateTokens();
         if (!isTokensUpdated) {
-            return null;
+            this.router.navigate([`/authorization`]);
+            throw 'You are unauthorized';
         }
 
-        (await this.TryGet(url)).result;
+        response = await this.TryPost(url, request);
+        if (response.statusCode === HttpStatusCode.Ok) {
+            return response.result;
+        } else {
+            this.router.navigate([`/authorization`]);
+            throw 'You are unauthorized';
+        }
     }
 
     private async TryGet<HttpR>(url: string): Promise<Response<HttpR>> {
@@ -91,7 +105,7 @@ export class BaseService {
     private async updateTokens(): Promise<boolean> {
         const accountUrl = `${this.accountBaseUrl}/update-tokens`
         const refreshToken = this.cookieService.get(this.refreshTokenField);
-        const newTokensResponse: Response<UserTokenDto> = await this.TryPost(accountUrl, refreshToken);
+        const newTokensResponse: Response<UserTokenDto> = await this.TryPost(accountUrl, { refreshToken: refreshToken });
         if (!newTokensResponse.result) {
             return false;
         }
@@ -103,10 +117,13 @@ export class BaseService {
     }
 
     private generateHttpOptions(): { headers: HttpHeaders } {
+        let accessToken = this.cookieService.get(this.accessTokenField);
+        if (!accessToken) {
+            accessToken = '';
+        }
         const httpOptions = {
             headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this.cookieService.get(this.accessTokenField),
+                'Authorization': 'Bearer ' + accessToken
             }),
         }
 

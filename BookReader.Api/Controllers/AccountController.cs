@@ -42,14 +42,16 @@ namespace BookReader.Api.Controllers
         public async Task<IActionResult> Auth( [FromBody] AuthRequestDto authRequestDto )
         {
             UserTokenDto userToken = await _accountService.Auth( authRequestDto.Login, authRequestDto.Password );
+            await _unitOfWork.CommitAsync();
 
             return Ok( userToken );
         }
 
         [HttpPost( "update-tokens" )]
-        public async Task<IActionResult> UpdateTokens( [FromBody] string refreshToken )
+        public async Task<IActionResult> UpdateTokens( [FromBody] UpdateTokensRequest updateTokensRequest )
         {
-            UserTokenDto userToken = await _accountService.UpdateTokens( refreshToken );
+            UserTokenDto userToken = await _accountService.UpdateTokens( updateTokensRequest.RefreshToken );
+            await _unitOfWork.CommitAsync();
 
             return Ok( userToken );
         }

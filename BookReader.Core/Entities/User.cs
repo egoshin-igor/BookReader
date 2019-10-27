@@ -24,6 +24,7 @@
             FirstName = firstName;
             LastName = lastName;
             Login = login;
+            Password = password;
             Email = email;
         }
 

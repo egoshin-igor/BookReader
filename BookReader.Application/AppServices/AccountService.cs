@@ -56,17 +56,17 @@ namespace BookReader.Application.AppServices
 
         public async Task<UserTokenDto> UpdateTokens( string refreshToken )
         {
-            string[] tokenInfos = refreshToken.Split( '|' );
+            string[] tokenInfos = refreshToken.Split( '_' );
             if ( tokenInfos.Length != 2 )
                 return null;
             string refreshTokenPart = tokenInfos[ 1 ];
 
             int userId;
-            if ( !int.TryParse( refreshTokenPart, out userId ) )
+            if ( !int.TryParse( tokenInfos[ 0 ], out userId ) )
                 return null;
 
             User user = await _userRepository.GetAsync( userId );
-            if ( user == null || user.RefreshToken != refreshToken )
+            if ( user == null || user.RefreshToken != refreshTokenPart )
                 return null;
 
             return GenerateToken( user );
@@ -82,13 +82,13 @@ namespace BookReader.Application.AppServices
                     audience: AuthOptions.Audience,
                     notBefore: utcNow,
                     claims: identity.Claims,
-                    expires: utcNow.Add( TimeSpan.FromMinutes( AuthOptions.LifeTimeInMinutes ) ),
+                    expires: utcNow.AddMinutes( AuthOptions.LifeTimeInMinutes ),
                     signingCredentials: new SigningCredentials( AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256 ) );
             string encodedJwt = new JwtSecurityTokenHandler().WriteToken( jwt );
 
             string refreshToken = Guid.NewGuid().ToString();
             user.UpdateRefreshToken( refreshToken );
-            return new UserTokenDto { AccessToken = encodedJwt, RefreshToken = $"{user.Id}|{refreshToken}" };
+            return new UserTokenDto { AccessToken = encodedJwt, RefreshToken = $"{user.Id}_{refreshToken}" };
         }
 
         private ClaimsIdentity GetIdentity( User user )
