@@ -1,11 +1,13 @@
 <form class="au-form">
-    <div>
+    <div class="au-container">
         <mat-form-field>
-            <input matInput placeholder="Ввидите логин">
+            <input matInput placeholder="Ввидите логин" name="login" required="" [(ngModel)]="authorizationData.login">
         </mat-form-field>
         <mat-form-field>
-            <input matInput placeholder="Введите пароль">
+            <input type="password" matInput placeholder="Введите пароль" name="password" required="" [(ngModel)]="authorizationData.password">
         </mat-form-field>
-        <button mat-raised-button color="primary">Войти</button>
+        <div>
+            <button mat-raised-button color="primary" (click)="authorize(authorizationData)">Войти</button>
+        </div>
     </div>
 </form>

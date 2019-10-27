@@ -11,9 +11,11 @@ export class AuthorizationData {
   styleUrls: ['./authorization.component.scss']
 })
 export class AuthorizationComponent implements OnInit {
-  public authorizationData: AuthorizationData = new AuthorizationData();
+  public authorizationData: AuthorizationData;
 
-  constructor() { }
+  constructor() {
+    this.authorizationData = new AuthorizationData();
+   }
 
   ngOnInit() {
   }

@@ -14,12 +14,14 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { RegistrationComponent } from './pages/registration/registration.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    AuthorizationComponent
+    AuthorizationComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
