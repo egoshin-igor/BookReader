@@ -1,22 +1,21 @@
+// angular
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
+// modules
+import { AppRoutingModule } from './app-routing.module';
+import { MaterialDesignModule } from './modules/material-design-module';
+// components
+import { AppComponent } from './app.component';
+import { RegistrationComponent } from './pages/registration/registration.component';
+import { AuthorizationComponent } from './pages/authorization/authorization.component';
 import { HomeComponent } from './home/home.component';
+// services
 import { HomeService } from './home.service';
 import { AccountService } from './services/account.service';
-import { AuthorizationComponent } from './pages/authorization/authorization.component'
-import { FormsModule } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
-
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBarModule } from '@angular/material';
-import { RegistrationComponent } from './pages/registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -31,10 +30,7 @@ import { RegistrationComponent } from './pages/registration/registration.compone
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSnackBarModule
+    MaterialDesignModule
   ],
   providers: [
     HomeService,
