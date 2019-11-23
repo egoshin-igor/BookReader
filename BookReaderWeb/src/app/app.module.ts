@@ -18,6 +18,8 @@ import { MatToolbarComponent } from './directives/mat-toolbar/mat-toolbar.compon
 import { HomeService } from './home.service';
 import { AccountService } from './services/account.service';
 import { CookieService } from 'ngx-cookie-service';
+import { CardBookComponent } from './directives/card-book/card-book.component';
+import { BookListComponent } from './pages/book-list/book-list.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { CookieService } from 'ngx-cookie-service';
     HomeComponent,
     AuthorizationComponent,
     RegistrationComponent,
-    MatToolbarComponent
+    MatToolbarComponent,
+    CardBookComponent,
+    BookListComponent
   ],
   imports: [
     BrowserModule,
