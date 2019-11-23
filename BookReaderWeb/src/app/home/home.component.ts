@@ -14,7 +14,6 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this._homeService.getName().then( (response) =>
     {
-      console.log(response );
       this.user = response;
     } );
   }

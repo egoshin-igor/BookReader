@@ -1,0 +1,36 @@
+<form [formGroup]="addBookFormGroup" class="add-book-form">
+    <h1 class="page-title">Добавление книги</h1>
+    <mat-form-field class="full-width form-field">
+        <input [(ngModel)]="addBookDto.name" formControlName="name" matInput placeholder="Название книги">
+    </mat-form-field>
+    <mat-form-field class="full-width form-field">
+        <input [(ngModel)]="addBookDto.author" formControlName="author" matInput placeholder="Автор">
+    </mat-form-field>
+    <div>
+        <input hidden type="file" accept="image/*" #bookImageInput formControlName="bookImage"
+            (change)="onChangeBookImageInput($event)" />
+        <image-cropper class="book-image-cropper" [imageChangedEvent]="bookImageChangedEvent"
+            [maintainAspectRatio]="true" [aspectRatio]="3 / 4" [resizeToWidth]="720" format="png"
+            (imageCropped)="saveBookImage($event)"></image-cropper>
+        <div class="download-file-button">
+            <button mat-raised-button color="primary" (click)="bookImageInput.click()">Добавить изображение для
+                книги</button>
+        </div>
+        <img class="book-image" *ngIf="isImageDownloaded()" [src]="image" />
+    </div>
+    <div>
+        <input hidden type="file" accept=".fb2,.txt" #bookFileInput formControlName="bookFile"
+            (change)="onChangeBookFileInput($event)" />
+        <div class="download-file-button">
+            <button mat-raised-button color="primary" (click)="bookFileInput.click()">Добавить файл
+                книги</button>
+        </div>
+    </div>
+    <div>
+        <button [disabled]="addBookFormGroup.invalid" class="finish-button" mat-stroked-button (click)="onSaveClick()"
+            color="primary">Сохранить</button>
+        <button [disabled]="addBookFormGroup.invalid" type="button" class="finish-button" mat-stroked-button
+            (click)="onSaveAndAddMoreClick()" color="primary">Сохранить и добавить ещё</button>
+        <button type="button" mat-stroked-button (click)="onResetClick()">Отмена</button>
+    </div>
+</form>

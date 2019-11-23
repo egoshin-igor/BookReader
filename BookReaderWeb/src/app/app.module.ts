@@ -3,11 +3,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {CommonModule} from '@angular/common';
 // modules
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialDesignModule } from './modules/material-design-module';
+import { ImageCropperModule } from 'ngx-image-cropper';
 // components
 import { AppComponent } from './app.component';
 import { RegistrationComponent } from './pages/registration/registration.component';
@@ -18,6 +19,7 @@ import { MatToolbarComponent } from './directives/mat-toolbar/mat-toolbar.compon
 import { HomeService } from './home.service';
 import { AccountService } from './services/account.service';
 import { CookieService } from 'ngx-cookie-service';
+import { AddBookComponent } from './pages/add-book/add-book.component';
 import { CardBookComponent } from './directives/card-book/card-book.component';
 import { BookListComponent } from './pages/book-list/book-list.component';
 
@@ -28,6 +30,7 @@ import { BookListComponent } from './pages/book-list/book-list.component';
     AuthorizationComponent,
     RegistrationComponent,
     MatToolbarComponent,
+    AddBookComponent,
     CardBookComponent,
     BookListComponent
   ],
@@ -38,7 +41,9 @@ import { BookListComponent } from './pages/book-list/book-list.component';
     HttpClientModule,
     FormsModule,
     MaterialDesignModule,
-    CommonModule
+    CommonModule,
+    ImageCropperModule,
+    ReactiveFormsModule
   ],
   providers: [
     HomeService,
