@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
-        <span>BookReader</span>
+        <p class="main-link" (click)="redirectToHome()">BookReader</p>
         <div class="button-container">
             <button class="action-button" mat-raised-button color="white" *ngFor="let button of buttons" (click)="button.onAction()">{{button.name}}</button>
         </div>

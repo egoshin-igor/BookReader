@@ -30,6 +30,10 @@ export class HeaderComponent implements OnInit {
     console.log(this.buttons[1].name);
   }
 
+  public redirectToHome() {
+    this.router.navigate(["/home"]);
+  }
+
   private getButtonsForAuthUser(): IHeaderButton[] {
     return [
       {
