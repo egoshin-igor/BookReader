@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {IToolbarButton} from '../app/directives/mat-toolbar/mat-toolbar.component'
+import {IHeaderButton} from './directives/header/header.component'
 
 @Component({
   selector: 'app-root',
@@ -8,7 +8,7 @@ import {IToolbarButton} from '../app/directives/mat-toolbar/mat-toolbar.componen
 })
 export class AppComponent {
   title = 'BookReaderWeb';
-  public mybuttons: IToolbarButton[];
+  public mybuttons: IHeaderButton[];
 
   constructor() {
     this.mybuttons = [{name: "Регистрация", onAction: () => {}}, {name: "Авторизация", onAction: () => {}}];

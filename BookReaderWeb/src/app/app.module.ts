@@ -14,7 +14,7 @@ import { AppComponent } from './app.component';
 import { RegistrationComponent } from './pages/registration/registration.component';
 import { AuthorizationComponent } from './pages/authorization/authorization.component';
 import { HomeComponent } from './home/home.component';
-import { MatToolbarComponent } from './directives/mat-toolbar/mat-toolbar.component';
+import { HeaderComponent } from './directives/header/header.component';
 // services
 import { HomeService } from './home.service';
 import { AccountService } from './services/account.service';
@@ -29,7 +29,7 @@ import { BookListComponent } from './pages/book-list/book-list.component';
     HomeComponent,
     AuthorizationComponent,
     RegistrationComponent,
-    MatToolbarComponent,
+    HeaderComponent,
     AddBookComponent,
     CardBookComponent,
     BookListComponent
