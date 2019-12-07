@@ -7,6 +7,7 @@ namespace BookReader.Application.AppServices.Dtos
         public string Name { get; set; }
         public string Author { get; set; }
         public int GenreId { get; set; }
+        public int UserId { get; set; }
         public FormFileAdapter Image { get; set; }
         public FormFileAdapter BookFile { get; set; }
     }

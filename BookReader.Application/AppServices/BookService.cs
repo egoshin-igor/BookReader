@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using BookReader.Application.AppServices.Dtos;
 using BookReader.Application.AppServices.Entities;
+using BookReader.Application.Repositories;
+using BookReader.Core.Entities;
+using MusicStore.Lib.Repositories.Abstractions;
 
 namespace BookReader.Application.AppServices
 {
@@ -16,6 +19,22 @@ namespace BookReader.Application.AppServices
     {
         private const string ImagesPath = @"D:\Studies\BookRWrapper\Images";
         private const string BookFilesPath = @"D:\Studies\BookRWrapper\BookFiles";
+        private readonly IBookRepository _bookRepository;
+        private readonly IAuthorRepository _authorRepository;
+        private readonly IUserBookRepository _userBookRepository;
+        private readonly IUnitOfWork _unitOfWork;
+
+        public BookService(
+            IBookRepository bookRepository,
+            IAuthorRepository authorRepository,
+            IUserBookRepository userBookRepository,
+            IUnitOfWork unitOfWork )
+        {
+            _bookRepository = bookRepository;
+            _authorRepository = authorRepository;
+            _userBookRepository = userBookRepository;
+            _unitOfWork = unitOfWork;
+        }
 
         public async Task AddBookAsync( AddBookDto addBookDto )
         {
@@ -24,7 +43,23 @@ namespace BookReader.Application.AppServices
             var imageSaveResult = await SaveAsync( addBookDto.BookFile, BookFilesPath );
             var fileSaveResult = await SaveAsync( addBookDto.Image, ImagesPath );
 
+            var author = new Author( addBookDto.Author );
+            _authorRepository.Add( author );
+            await _unitOfWork.CommitAsync();
 
+            var book = new Book(
+                addBookDto.Name,
+                author.Id,
+                addBookDto.GenreId,
+                imageSaveResult.RelativePath,
+                fileSaveResult.RelativePath
+            );
+            _bookRepository.Add( book );
+            await _unitOfWork.CommitAsync();
+
+            var userBook = new UserBook( book.Id, addBookDto.UserId );
+            _userBookRepository.Add( userBook );
+            await _unitOfWork.CommitAsync();
         }
 
         private async Task<FileSaveResult> SaveAsync( FormFileAdapter formFile, string basePath )

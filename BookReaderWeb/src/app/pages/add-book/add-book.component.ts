@@ -15,6 +15,7 @@ export class AddBookComponent implements OnInit {
   bookImageChangedEvent: any = '';
   addBookFormGroup: FormGroup;
   image: string = '';
+  fileImage: File;
   genres: GenreDto[] = [];
   isFileDownloaded = false;
 
@@ -48,7 +49,7 @@ export class AddBookComponent implements OnInit {
 
     if (files.length > 0) {
       const file = files.item(0);
-      this.addBookDto.bookImage = file;
+      this.fileImage = file;
       this.bookImageChangedEvent = $event;
     }
   }
@@ -66,6 +67,20 @@ export class AddBookComponent implements OnInit {
 
   saveBookImage($event: ImageCroppedEvent): void {
     this.image = $event.base64;
+    const name = this.fileImage.name;
+    const lastModified = this.fileImage.lastModified;
+    this.addBookDto.bookImage = this.blobToFile(this.dataURItoBlob($event.base64), name, lastModified);
+  }
+
+  dataURItoBlob(dataUri: string) {
+    const binary = atob(dataUri.split(',')[1]);
+    const array = [];
+    for (let i = 0; i < binary.length; i++) {
+      array.push(binary.charCodeAt(i));
+    }
+    return new Blob([new Uint8Array(array)], {
+      type: 'image/png'
+    });
   }
 
   isImageDownloaded(): boolean {
@@ -79,6 +94,11 @@ export class AddBookComponent implements OnInit {
 
   onResetClick(): void {
     this.reset();
+  }
+
+  private blobToFile(blob: Blob, fileName: string, lastModified: number): File {
+    var file = new File([blob], fileName, { lastModified: lastModified });
+    return file
   }
 
   private reset(): void {

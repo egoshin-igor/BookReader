@@ -13,9 +13,16 @@ namespace BookReader.Core.Entities
         public UserBookStatus Status { get; protected set; }
         public string Note { get; protected set; }
 
+        public UserBook( int bookId, int userId )
+        {
+            BookId = bookId;
+            UserId = userId;
+            StartReadingOnUtc = DateTime.UtcNow;
+            Status = UserBookStatus.ReadyToRead;
+        }
+
         protected UserBook()
         {
-
         }
     }
 }

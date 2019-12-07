@@ -40,7 +40,8 @@ namespace BookReader.Api.Controllers
                 GenreId = draftDddBookDto.GenreId,
                 Name = draftDddBookDto.Name,
                 BookFile = await FormFileAdapter.CreateAsync( files[ 0 ] ),
-                Image = await FormFileAdapter.CreateAsync( files[ 1 ] )
+                Image = await FormFileAdapter.CreateAsync( files[ 1 ] ),
+                UserId = UserId
             };
 
             await _bookService.AddBookAsync( addBookDto );
