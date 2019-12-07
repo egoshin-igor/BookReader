@@ -20,13 +20,6 @@ namespace BookReader.Api.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        [HttpGet( "my-name" )]
-        public async Task<int> GetMyName()
-        {
-            var id = UserId;
-            return UserId;
-        }
-
         [HttpGet( "books" )]
         public async Task<List<BookDto>> GetBooksAsync()
         {

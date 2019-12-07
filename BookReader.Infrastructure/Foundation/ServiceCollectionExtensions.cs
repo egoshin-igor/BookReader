@@ -1,5 +1,7 @@
 ﻿using BookReader.Application.AppServices;
+using BookReader.Application.Queries;
 using BookReader.Application.Repositories;
+using BookReader.Infrastructure.Queries;
 using BookReader.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using MusicStore.Lib.Repositories;
@@ -20,6 +22,9 @@ namespace BookReader.Infrastructure.Foundation
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IGenreRepository, GenreRepository>();
             services.AddScoped<IUserBookRepository, UserBookRepository>();
+
+            // Queries
+            services.AddScoped<IGenreQuery, GenreQuery>();
 
             // Other
             services.AddScoped<IUnitOfWork, UnitOfWork<BookReaderDbContext>>();

@@ -1,4 +1,4 @@
-﻿namespace BookReader.Api.Dtos
+﻿namespace BookReader.Application.Queries.Dto
 {
     public class GenreDto
     {
