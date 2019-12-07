@@ -13,16 +13,16 @@ import { Router } from '@angular/router';
 export class AccountService extends BaseService {
   public userAuthorized: EventEmitter<void>;
   public userUnauthorized: EventEmitter<void>;
-  private accountUrl = 'api/account';
+  private readonly accountUrl = 'api/account';
 
-  constructor(httpClient: HttpClient, cookieService: CookieService, router: Router ) {
+  constructor(httpClient: HttpClient, cookieService: CookieService, router: Router) {
     super(httpClient, cookieService, router);
     this.userAuthorized = new EventEmitter();
     this.userUnauthorized = new EventEmitter();
   }
 
   public async registrate(registrationRequest: RegistrationRequestDto): Promise<boolean> {
-    const url = `${this.accountUrl}/registrate`
+    const url = `${this.accountUrl}/registrate`;
 
     const response: UserTokenDto = await this.Post(url, registrationRequest);
     if (!response) {

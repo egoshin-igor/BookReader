@@ -13,20 +13,17 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { AppComponent } from './app.component';
 import { RegistrationComponent } from './pages/registration/registration.component';
 import { AuthorizationComponent } from './pages/authorization/authorization.component';
-import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './directives/header/header.component';
-// services
-import { HomeService } from './home.service';
-import { AccountService } from './services/account.service';
-import { CookieService } from 'ngx-cookie-service';
 import { AddBookComponent } from './pages/add-book/add-book.component';
 import { CardBookComponent } from './directives/card-book/card-book.component';
 import { BookListComponent } from './pages/book-list/book-list.component';
+// services
+import { AccountService } from './services/account.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     AuthorizationComponent,
     RegistrationComponent,
     HeaderComponent,
@@ -46,7 +43,6 @@ import { BookListComponent } from './pages/book-list/book-list.component';
     ReactiveFormsModule
   ],
   providers: [
-    HomeService,
     AccountService,
     CookieService
   ],
