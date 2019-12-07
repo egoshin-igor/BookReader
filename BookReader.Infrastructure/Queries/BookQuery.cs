@@ -14,20 +14,23 @@ namespace BookReader.Infrastructure.Queries
     {
         private IQueryable<UserBook> _userBookQuery;
 
-        public BookQuery( BookReaderDbContext dbContext, IQueryable<UserBook> userBookQuery ) : base ( dbContext )
+        public BookQuery( BookReaderDbContext dbContext, IQueryable<UserBook> userBookQuery ) : base( dbContext )
         {
             _userBookQuery = userBookQuery;
         }
 
         public async Task<List<BookDto>> GetAll( int userId )
         {
-            List<UserBook> userBooks = await _userBookQuery.Where( uB => uB.UserId == userId ).ToListAsync();
-            List<Book> books = await Query.Where(  ).ToListAsync();
+            var query = from book in Query
+                        join userBook in _userBookQuery on book.Id equals userBook.BookId
+                        where userBook.UserId == userId
+                        select new { book, userBook };
+            var userBooks = await query.ToListAsync();
 
-            return books.Select( b => new BookDto
+
+            return userBooks.ConvertAll( ub => new BookDto
             {
-                Name = b.Name
-            } ).ToList();
+            } );
         }
     }
 }
