@@ -27,7 +27,7 @@ namespace BookReader.Api.Controllers
             throw new NotImplementedException();
         }
 
-        [HttpGet]
+        [HttpGet( "genres" )]
         public async Task<List<GenreDto>> GetGenres()
         {
             return await _genreQuery.GetAll();

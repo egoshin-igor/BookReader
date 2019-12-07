@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { AddBookDto } from 'src/app/dto/add-book/add-book.dto';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AddBookService } from 'src/app/services/add-book.service';
+import { GenreDto } from 'src/app/dto/app/genre.dto';
 
 @Component({
   selector: 'app-add-book',
@@ -13,9 +15,11 @@ export class AddBookComponent implements OnInit {
   bookImageChangedEvent: any = '';
   addBookFormGroup: FormGroup;
   image: string = '';
+  genres: GenreDto[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
+    private addBookService: AddBookService
   ) { }
 
   ngOnInit() {
@@ -33,6 +37,8 @@ export class AddBookComponent implements OnInit {
       bookFile: ['', Validators.required],
       bookFileValidator: ['', Validators.required]
     });
+
+    this.addBookService.getGenres().then((genres) => this.genres = genres);
   }
 
   onChangeBookImageInput($event: any) {

@@ -3,6 +3,14 @@
     <mat-form-field class="full-width form-field">
         <input [(ngModel)]="addBookDto.name" formControlName="name" matInput placeholder="Название книги">
     </mat-form-field>
+    <mat-form-field>
+        <mat-label>Жанр книги</mat-label>
+        <mat-select>
+            <mat-option *ngFor="let genre of genres" [value]="genre.id">
+                {{genre.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
     <mat-form-field class="full-width form-field">
         <input [(ngModel)]="addBookDto.author" formControlName="author" matInput placeholder="Автор">
     </mat-form-field>

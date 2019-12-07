@@ -15,12 +15,9 @@
   <ItemGroup>
     <ProjectReference Include="..\BookReader.Application\BookReader.Application.csproj" />
     <ProjectReference Include="..\BookReader.Core\BookReader.Core.csproj" />
+    <ProjectReference Include="..\Lib\Queries.Abstractions\Queries.Abstractions.csproj" />
     <ProjectReference Include="..\Lib\Repositories.Abstractions\Repositories.Abstractions.csproj" />
     <ProjectReference Include="..\Lib\Repositories\Repositories.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Queries\" />
   </ItemGroup>
 
 </Project>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BookReader.Api.Dtos;
+using BookReader.Application.Queries.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MusicStore.Lib.Repositories.Abstractions;
