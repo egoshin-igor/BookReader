@@ -9,7 +9,7 @@ namespace BookReader.Api.Controllers
     [Route( "api/reading" )]
     [ApiController]
     [Authorize]
-    public class BookReadingController : ControllerBase
+    public class BookReadingController : BaseController
     {
         [HttpGet( "detail" )]
         public Task<DetailBookDto> GetDetails( [FromQuery] int bookId )

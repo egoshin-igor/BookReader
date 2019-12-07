@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BookReader.Api.Dtos;
-using BookReader.Application.AppServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MusicStore.Lib.Repositories.Abstractions;
@@ -12,7 +11,7 @@ namespace BookReader.Api.Controllers
     [Route( "api/home" )]
     [ApiController]
     [Authorize]
-    public class HomeController : ControllerBase
+    public class HomeController : BaseController
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -22,9 +21,10 @@ namespace BookReader.Api.Controllers
         }
 
         [HttpGet( "my-name" )]
-        public async Task<object> GetMyName()
+        public async Task<int> GetMyName()
         {
-            return new { User.Identity.Name };
+            var id = UserId;
+            return UserId;
         }
 
         [HttpGet( "books" )]

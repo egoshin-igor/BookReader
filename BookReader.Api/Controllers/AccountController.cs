@@ -11,7 +11,7 @@ namespace BookReader.Api.Controllers
     [Route( "api/account" )]
     [ApiController]
     [AllowAnonymous]
-    public class AccountController : ControllerBase
+    public class AccountController : BaseController
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAccountService _accountService;

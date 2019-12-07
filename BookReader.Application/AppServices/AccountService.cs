@@ -96,7 +96,8 @@ namespace BookReader.Application.AppServices
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, UserRole.User)
+                new Claim(UserClaim.UserId, user.Id.ToString() ),
+            new Claim( ClaimsIdentity.DefaultRoleClaimType, UserRole.User )
             };
 
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(
