@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest, HttpEvent, HttpResponse } from '@angular/common/http';
 import { HttpStatusCode } from '../constants/http-status-code';
 import { CookieService } from 'ngx-cookie-service';
 import { UserTokenDto } from '../dto/account/user-token.dto';
@@ -41,7 +41,7 @@ export class BaseService {
             throw 'You are unauthorized';
         }
     }
-
+    
     protected async Post<HttpRequest, HttpResponse>(url: string, request: HttpRequest): Promise<HttpResponse> {
         let response: Response<HttpResponse> = await this.TryPost(url, request);
         console.log(response);

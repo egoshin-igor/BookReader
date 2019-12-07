@@ -5,7 +5,7 @@
     </mat-form-field>
     <mat-form-field>
         <mat-label>Жанр книги</mat-label>
-        <mat-select>
+        <mat-select [(ngModel)]="addBookDto.genreId" formControlName="genreId">
             <mat-option *ngFor="let genre of genres" [value]="genre.id">
                 {{genre.name}}
             </mat-option>
@@ -36,10 +36,8 @@
         </div>
     </div>
     <div>
-        <button [disabled]="addBookFormGroup.invalid" class="finish-button" mat-stroked-button (click)="onSaveClick()"
-            color="primary">Сохранить</button>
         <button [disabled]="addBookFormGroup.invalid" type="button" class="finish-button" mat-stroked-button
-            (click)="onSaveAndAddMoreClick()" color="primary">Сохранить и добавить ещё</button>
+            (click)="onSaveClick()" color="primary">Сохранить</button>
         <button type="button" mat-stroked-button (click)="onResetClick()">Отмена</button>
     </div>
 </form>

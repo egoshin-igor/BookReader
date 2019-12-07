@@ -15,6 +15,7 @@ namespace BookReader.Infrastructure.Foundation
         {
             // AppServices
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IBookService, BookService>();
 
             // Repositories
             services.AddScoped<IUserRepository, UserRepository>();

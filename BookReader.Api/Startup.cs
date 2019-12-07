@@ -4,6 +4,7 @@ using BookReader.Infrastructure.Foundation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -30,6 +31,12 @@ namespace BookReader.Api
                 .SetCompatibilityVersion( CompatibilityVersion.Version_2_2 );
 
             AddAuthentication( services );
+            services.Configure<FormOptions>( o =>
+            {
+                o.ValueLengthLimit = int.MaxValue;
+                o.MultipartBodyLengthLimit = int.MaxValue;
+                o.MemoryBufferThreshold = int.MaxValue;
+            } );
 
             services.AddDbContext<BookReaderDbContext>( c =>
                 c.UseSqlServer( Configuration.GetConnectionString( "BookReaderConnection" ) ) );

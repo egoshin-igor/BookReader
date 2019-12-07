@@ -36,6 +36,7 @@ export class AddBookComponent implements OnInit {
       author: ['', Validators.required],
       bookImage: ['', Validators.required],
       bookFile: ['', Validators.required],
+      genreId: ['', Validators.required],
       bookFileValidator: ['', Validators.required]
     });
     this.addBookFormGroup.controls['bookFileValidator'].enable();
@@ -46,6 +47,8 @@ export class AddBookComponent implements OnInit {
     const files: FileList = $event.srcElement.files;
 
     if (files.length > 0) {
+      const file = files.item(0);
+      this.addBookDto.bookImage = file;
       this.bookImageChangedEvent = $event;
     }
   }
@@ -55,6 +58,7 @@ export class AddBookComponent implements OnInit {
 
     if (files.length > 0) {
       const file = files.item(0);
+      this.addBookDto.bookFile = file;
       this.addBookFormGroup.controls['bookFileValidator'].disable();
       this.isFileDownloaded = true;
     }
@@ -69,12 +73,7 @@ export class AddBookComponent implements OnInit {
   }
 
   async onSaveClick(): Promise<void> {
-    // const addedBookId = await this.addBook();
-    // this._router.navigate([`/book/${addedBookId}`])
-  }
-
-  async onSaveAndAddMoreClick(): Promise<void> {
-    // await this.addBook();
+    await this.addBookService.addBook( this.addBookDto );
     this.reset();
   }
 
@@ -92,6 +91,7 @@ export class AddBookComponent implements OnInit {
     this.image = '';
     this.addBookFormGroup.controls['bookFileValidator'].enable();
     this.addBookFormGroup.controls['bookImage'].setValue('');
+    this.addBookFormGroup.controls['bookFile'].setValue('');
     this.addBookFormGroup.controls['bookImage'].setErrors({ 'incorrect': true });
     this.isFileDownloaded = false;
   }
