@@ -17,8 +17,9 @@ namespace BookReader.Application.AppServices
 
     public class BookService : IBookService
     {
-        private const string ImagesPath = @"D:\Studies\BookRWrapper\Images";
-        private const string BookFilesPath = @"D:\Studies\BookRWrapper\BookFiles";
+        private const string ImagesPath = @"D:\Studies\BookRWrapper\images";
+        private const string BookFilesPath = @"D:\Studies\BookRWrapper\books";
+
         private readonly IBookRepository _bookRepository;
         private readonly IAuthorRepository _authorRepository;
         private readonly IUserBookRepository _userBookRepository;
@@ -40,8 +41,8 @@ namespace BookReader.Application.AppServices
         {
             Directory.CreateDirectory( ImagesPath );
             Directory.CreateDirectory( BookFilesPath );
-            var imageSaveResult = await SaveAsync( addBookDto.BookFile, BookFilesPath );
-            var fileSaveResult = await SaveAsync( addBookDto.Image, ImagesPath );
+            var imageSaveResult = await SaveAsync( addBookDto.Image, ImagesPath );
+            var fileSaveResult = await SaveAsync( addBookDto.BookFile, BookFilesPath );
 
             var author = new Author( addBookDto.Author );
             _authorRepository.Add( author );

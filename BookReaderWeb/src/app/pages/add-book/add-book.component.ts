@@ -4,6 +4,7 @@ import { AddBookDto } from 'src/app/dto/add-book/add-book.dto';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AddBookService } from 'src/app/services/add-book.service';
 import { GenreDto } from 'src/app/dto/app/genre.dto';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-add-book',
@@ -21,7 +22,8 @@ export class AddBookComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private addBookService: AddBookService
+    private addBookService: AddBookService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -87,8 +89,17 @@ export class AddBookComponent implements OnInit {
     return this.image !== '';
   }
 
-  async onSaveClick(): Promise<void> {
-    await this.addBookService.addBook( this.addBookDto );
+  onSaveClick(): void {
+    this.addBookService.addBook( this.addBookDto ).then(() => {
+      this.snackBar.open('Вы успешно добавили книгу', null, {
+        duration: 2000
+      });
+    }).catch(() => {
+      this.snackBar.open('Не удалось добавить книгу. Попробуйте позже', null, {
+        duration: 2000
+      });
+    });
+    
     this.reset();
   }
 
