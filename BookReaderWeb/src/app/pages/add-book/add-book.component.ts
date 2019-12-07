@@ -16,6 +16,7 @@ export class AddBookComponent implements OnInit {
   addBookFormGroup: FormGroup;
   image: string = '';
   genres: GenreDto[] = [];
+  isFileDownloaded = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -37,11 +38,11 @@ export class AddBookComponent implements OnInit {
       bookFile: ['', Validators.required],
       bookFileValidator: ['', Validators.required]
     });
-
+    this.addBookFormGroup.controls['bookFileValidator'].enable();
     this.addBookService.getGenres().then((genres) => this.genres = genres);
   }
 
-  onChangeBookImageInput($event: any) {
+  onChangeBookImageInput($event: any): void {
     const files: FileList = $event.srcElement.files;
 
     if (files.length > 0) {
@@ -49,20 +50,21 @@ export class AddBookComponent implements OnInit {
     }
   }
   
-  onChangeBookFileInput($event: any) {
+  onChangeBookFileInput($event: any): void {
     const files: FileList = $event.srcElement.files;
 
     if (files.length > 0) {
       const file = files.item(0);
       this.addBookFormGroup.controls['bookFileValidator'].disable();
+      this.isFileDownloaded = true;
     }
   }
 
-  saveBookImage($event: ImageCroppedEvent) {
+  saveBookImage($event: ImageCroppedEvent): void {
     this.image = $event.base64;
   }
 
-  isImageDownloaded() {
+  isImageDownloaded(): boolean {
     return this.image !== '';
   }
 
@@ -91,5 +93,6 @@ export class AddBookComponent implements OnInit {
     this.addBookFormGroup.controls['bookFileValidator'].enable();
     this.addBookFormGroup.controls['bookImage'].setValue('');
     this.addBookFormGroup.controls['bookImage'].setErrors({ 'incorrect': true });
+    this.isFileDownloaded = false;
   }
 }

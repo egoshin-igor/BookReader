@@ -1,7 +1,7 @@
 <form [formGroup]="addBookFormGroup" class="add-book-form">
     <h1 class="page-title">Добавление книги</h1>
     <mat-form-field class="full-width form-field">
-        <input [(ngModel)]="addBookDto.name" formControlName="name" matInput placeholder="Название книги">
+        <input autocomplete="off" [(ngModel)]="addBookDto.name" formControlName="name" matInput placeholder="Название книги">
     </mat-form-field>
     <mat-form-field>
         <mat-label>Жанр книги</mat-label>
@@ -12,7 +12,7 @@
         </mat-select>
     </mat-form-field>
     <mat-form-field class="full-width form-field">
-        <input [(ngModel)]="addBookDto.author" formControlName="author" matInput placeholder="Автор">
+        <input autocomplete="off" [(ngModel)]="addBookDto.author" formControlName="author" matInput placeholder="Автор">
     </mat-form-field>
     <div>
         <input hidden type="file" accept="image/*" #bookImageInput formControlName="bookImage"
@@ -32,6 +32,7 @@
         <div class="download-file-button">
             <button mat-raised-button color="primary" (click)="bookFileInput.click()">Добавить файл
                 книги</button>
+            <mat-icon class="success-icon noselect" *ngIf="isFileDownloaded">done</mat-icon>
         </div>
     </div>
     <div>

@@ -2,9 +2,6 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { BaseService } from './base-service';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpClient } from '@angular/common/http';
-import { RegistrationRequestDto } from '../dto/account/registration-request.dto';
-import { UserTokenDto } from '../dto/account/user-token.dto';
-import { AuthRequestDto } from '../dto/account/auth-request.dto';
 import { Router } from '@angular/router';
 import { GenreDto } from '../dto/app/genre.dto';
 
