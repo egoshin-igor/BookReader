@@ -20,6 +20,7 @@ import { BookListComponent } from './pages/book-list/book-list.component';
 // services
 import { AccountService } from './services/account.service';
 import { CookieService } from 'ngx-cookie-service';
+import {HomeService} from './services/home.service';
 import { AddBookService } from './services/add-book.service';
 
 @NgModule({
@@ -46,6 +47,7 @@ import { AddBookService } from './services/add-book.service';
   providers: [
     AccountService,
     CookieService,
+    HomeService,
     AddBookService
   ],
   bootstrap: [AppComponent]

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BookData } from '../../directives/card-book/card-book.component';
+import { BookDto } from '../../dto/book-list/book.dto';
+import { HomeService } from '../../services/home.service';
 
 @Component({
   selector: 'app-book-list',
@@ -12,11 +14,24 @@ export class BookListComponent implements OnInit {
   public booksInReading:BookData[];
   public readedBooks: BookData[];
 
-  constructor() {
+  constructor(private homeService: HomeService) {
     this.allBooks = [];
     this.booksInReading = [];
     this.readedBooks = [];
+   }
 
+  ngOnInit() {
+    this.initTestData();
+
+  }
+
+  private initialize(): void {
+    this.homeService.GetBooks().then((bookDtos:BookDto[]) => {
+     // this.allBooks = bookDtos;
+    });
+  }
+
+  private initTestData(): void {
     for(let i: number = 0; i < 10; i++) {
       this.allBooks.push({
         name: "Песнь льда и пламени",
@@ -39,9 +54,7 @@ export class BookListComponent implements OnInit {
         author: "Мартин"
       });
     }
-   }
-
-  ngOnInit() {
   }
+
 
 }
