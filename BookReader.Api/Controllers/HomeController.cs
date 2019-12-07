@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using BookReader.Api.Dtos;
+using BookReader.Application.Queries;
 using BookReader.Application.Queries.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,22 +14,26 @@ namespace BookReader.Api.Controllers
     public class HomeController : BaseController
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IBookQuery _bookQuery;
+        private readonly IGenreQuery _genreQuery;
 
-        public HomeController( IUnitOfWork unitOfWork )
+        public HomeController( IUnitOfWork unitOfWork, IBookQuery bookQuery, IGenreQuery genreQuery )
         {
             _unitOfWork = unitOfWork;
+            _bookQuery = bookQuery;
+            _genreQuery = genreQuery;
         }
 
         [HttpGet( "books" )]
         public async Task<List<BookDto>> GetBooksAsync()
         {
-            throw new NotImplementedException();
+            return await _bookQuery.GetAll( UserId );
         }
 
         [HttpGet( "genres" )]
         public async Task<List<GenreDto>> GetGenresAsync()
         {
-            throw new NotImplementedException();
+            return await _genreQuery.GetAll();
         }
     }
 }

@@ -8,7 +8,7 @@ namespace BookReader.Api.Controllers
     {
         public int UserId => GetUserId();
 
-        public int GetUserId()
+        private int GetUserId()
         {
             string userIdString = User.FindFirst( UserClaim.UserId )?.Value;
             if ( userIdString == null )
