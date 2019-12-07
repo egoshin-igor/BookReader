@@ -16,15 +16,11 @@ namespace BookReader.Infrastructure.Queries
         private IQueryable<Author> _authorQuery;
         private IQueryable<Genre> _genreQuery;
 
-        public BookQuery( 
-            BookReaderDbContext dbContext,
-            IQueryable<UserBook> userBookQuery, 
-            IQueryable<Author> authorQuery,
-            IQueryable<Genre> genreQuery ) : base( dbContext )
+        public BookQuery( BookReaderDbContext dbContext ) : base( dbContext )
         {
-            _userBookQuery = userBookQuery;
-            _authorQuery = authorQuery;
-            _genreQuery = genreQuery;
+            _userBookQuery = dbContext.Set<UserBook>().AsNoTracking();
+            _authorQuery = dbContext.Set<Author>().AsNoTracking(); 
+            _genreQuery = dbContext.Set<Genre>().AsNoTracking(); 
         }
 
         public async Task<List<BookDto>> GetAll( int userId )

@@ -17,7 +17,7 @@ export class HomeService extends BaseService {
 
     public async GetBooks(): Promise<BookDto[]> {
         const url = `${this.homeUrl}/books`;
-        const response: BookDto[] = await this.Post(url, null);
+        const response: BookDto[] = await this.Get(url);
         return response;
     }
 }

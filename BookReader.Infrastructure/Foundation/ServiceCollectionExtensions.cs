@@ -25,6 +25,7 @@ namespace BookReader.Infrastructure.Foundation
 
             // Queries
             services.AddScoped<IGenreQuery, GenreQuery>();
+            services.AddScoped<IBookQuery, BookQuery>();
 
             // Other
             services.AddScoped<IUnitOfWork, UnitOfWork<BookReaderDbContext>>();

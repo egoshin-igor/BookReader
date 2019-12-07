@@ -1,11 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-
-export interface BookData {
-  name: string;
-  imageUrl: string;
-  author: string;
-  genreName: string;
-}
+import { BookDto } from '../../dto/book-list/book.dto';
 
 @Component({
   selector: 'card-book',
@@ -14,7 +8,7 @@ export interface BookData {
 })
 export class CardBookComponent implements OnInit {
 
-  @Input() book: BookData;
+  @Input() book: BookDto;
 
   constructor() { }
 
