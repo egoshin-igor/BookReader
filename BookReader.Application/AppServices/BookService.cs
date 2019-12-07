@@ -13,6 +13,7 @@ namespace BookReader.Application.AppServices
     public interface IBookService
     {
         Task AddBookAsync( AddBookDto addBookDto );
+        Task DeleteBookAsync( int bookId );
     }
 
     public class BookService : IBookService
@@ -60,6 +61,21 @@ namespace BookReader.Application.AppServices
 
             var userBook = new UserBook( book.Id, addBookDto.UserId );
             _userBookRepository.Add( userBook );
+            await _unitOfWork.CommitAsync();
+        }
+
+        public async Task DeleteBookAsync( int bookId )
+        {
+            var book = await _bookRepository.GetAsync( bookId );
+            if ( File.Exists( BookFilesPath + book.FilePath ) )
+            {
+                File.Delete( BookFilesPath + book.FilePath );
+            }
+            if (File.Exists( ImagesPath + book.ImagePath ) )
+            {
+                File.Delete( ImagesPath + book.ImagePath );
+            }
+            _bookRepository.Remove( book );
             await _unitOfWork.CommitAsync();
         }
 

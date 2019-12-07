@@ -1,17 +1,17 @@
 <mat-tab-group [color]="white" [backgroundColor]="primary">
     <mat-tab label="Все">
         <div class="tab-content">
-            <card-book *ngFor="let book of allBooks" [book]="book"></card-book>
+            <card-book *ngFor="let book of allBooks" [book]="book" [onBookDeleted]="onBookDeleted.bind(this)"></card-book>
         </div>
     </mat-tab>
     <mat-tab label="Читаемые"> 
         <div class="tab-content">
-            <card-book *ngFor="let book of booksInReading" [book]="book"></card-book>
+            <card-book *ngFor="let book of booksInReading" [book]="book" [onBookDeleted]="onBookDeleted.bind(this)"></card-book>
         </div>
     </mat-tab>
     <mat-tab label="Прочитанные">  
         <div class="tab-content">
-            <card-book *ngFor="let book of readedBooks" [book]="book"></card-book>
+            <card-book *ngFor="let book of readedBooks" [book]="book" [onBookDeleted]="onBookDeleted.bind(this)"></card-book>
         </div>
     </mat-tab>
 </mat-tab-group>

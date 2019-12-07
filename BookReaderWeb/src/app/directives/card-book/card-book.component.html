@@ -8,7 +8,8 @@
       <p>{{book.genreName}}</p>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary">Читать</button>
+      <button mat-raised-button color="primary" (click)="openBook()">Читать</button>
+      <button mat-raised-button color="primary" (click)="deleteBook()">Удалить</button>
     </mat-card-actions>
 </mat-card>
   

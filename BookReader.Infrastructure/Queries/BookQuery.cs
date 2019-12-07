@@ -36,6 +36,7 @@ namespace BookReader.Infrastructure.Queries
             
             return userBooks.ConvertAll( ub => new BookDto
             {
+                Id = ub.book.Id,
                 Author = ub.author.Name,
                 Name = ub.book.Name,
                 ImagePath = ub.book.ImagePath,

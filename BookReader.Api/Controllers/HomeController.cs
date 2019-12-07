@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using BookReader.Application.AppServices;
 using BookReader.Application.Queries;
 using BookReader.Application.Queries.Dto;
 using Microsoft.AspNetCore.Authorization;
@@ -16,12 +17,14 @@ namespace BookReader.Api.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IBookQuery _bookQuery;
         private readonly IGenreQuery _genreQuery;
+        private readonly IBookService _bookService;
 
-        public HomeController( IUnitOfWork unitOfWork, IBookQuery bookQuery, IGenreQuery genreQuery )
+        public HomeController( IUnitOfWork unitOfWork, IBookQuery bookQuery, IGenreQuery genreQuery, IBookService bookService )
         {
             _unitOfWork = unitOfWork;
             _bookQuery = bookQuery;
             _genreQuery = genreQuery;
+            _bookService = bookService;
         }
 
         [HttpGet( "books" )]
@@ -34,6 +37,12 @@ namespace BookReader.Api.Controllers
         public async Task<List<GenreDto>> GetGenresAsync()
         {
             return await _genreQuery.GetAll();
+        }
+
+        [HttpPost( "delete/{bookId}" )]
+        public async Task DeleteBook( int bookId )
+        {
+            await _bookService.DeleteBookAsync( bookId );
         }
     }
 }

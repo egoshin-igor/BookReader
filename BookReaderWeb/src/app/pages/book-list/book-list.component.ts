@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BookDto } from '../../dto/book-list/book.dto';
-import { HomeService } from '../../services/home.service';
+import { BookService } from '../../services/book.service';
 import { UserBookStatus } from '../../constants/userBookStatus';
 
 @Component({
@@ -14,7 +14,7 @@ export class BookListComponent implements OnInit {
   public booksInReading:BookDto[];
   public readedBooks: BookDto[];
 
-  constructor(private homeService: HomeService) {
+  constructor(private bookService: BookService) {
     this.allBooks = [];
     this.booksInReading = [];
     this.readedBooks = [];
@@ -22,11 +22,15 @@ export class BookListComponent implements OnInit {
 
   ngOnInit() {
     this.initTestData();
-    this.initialize();
+    this.refreshBook();
   }
 
-  private initialize(): void {
-    this.homeService.GetBooks().then((bookDtos:BookDto[]) => {
+  public onBookDeleted(): void {
+    this.refreshBook();
+  }
+
+  private refreshBook(): void {
+    this.bookService.GetBooks().then((bookDtos:BookDto[]) => {
       if (!bookDtos) {
         return;
       }
@@ -40,6 +44,7 @@ export class BookListComponent implements OnInit {
   private initTestData(): void {
     for(let i: number = 0; i < 10; i++) {
       this.allBooks.push({
+        id: 1,
         name: "Песнь льда и пламени",
         jenreName: "Фантастика",
         imagePath: "https://material.angular.io/assets/img/examples/shiba1.jpg",
@@ -48,6 +53,7 @@ export class BookListComponent implements OnInit {
       });
 
       this.booksInReading.push({
+        id: 1,
         name: "Песнь льда и пламени",
         jenreName: "Фантастика",
         imagePath: "https://www.stihi.ru/pics/2013/06/07/3257.jpg",
@@ -56,6 +62,7 @@ export class BookListComponent implements OnInit {
       });
 
       this.readedBooks.push({
+        id: 1,
         name: "Песнь льда и пламени",
         jenreName: "Фантастика",
         imagePath: "https://www.nastol.com.ua/pic/201502/2560x1440/nastol.com.ua-128496.jpg",

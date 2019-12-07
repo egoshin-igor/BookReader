@@ -8,7 +8,7 @@ import { BookDto } from '../dto/book-list/book.dto';
 @Injectable({
     providedIn: 'root'
   })
-export class HomeService extends BaseService {
+export class BookService extends BaseService {
     private readonly homeUrl = 'api/home';
     
     constructor(httpClient: HttpClient, cookieService: CookieService, router: Router) {
@@ -19,5 +19,10 @@ export class HomeService extends BaseService {
         const url = `${this.homeUrl}/books`;
         const response: BookDto[] = await this.Get(url);
         return response;
+    }
+
+    public async DeleteBook(bookId: number) {
+        const url = `${this.homeUrl}/delete/${bookId}`;
+        await this.Post(url, {});
     }
 }
